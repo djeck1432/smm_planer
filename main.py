@@ -19,9 +19,6 @@ from pydrive.drive import GoogleDrive
 
 # If modifying these scopes, delete the file token.pickle.
 SCOPES = ['https://www.googleapis.com/auth/spreadsheets']
-
-# The ID and range of a sample spreadsheet.
-SAMPLE_SPREADSHEET_ID = '1uzAoBYWrmxAGAyENIZ7EJ0HwHD_JxtWSELG4ppYVvT0'
 SAMPLE_RANGE_NAME = 'A:H'
 DAYS_OF_THE_WEEK = {
     'понедельник': 0,
@@ -35,7 +32,7 @@ DAYS_OF_THE_WEEK = {
 PUBLISH_OR_NOT = {'да': True, 'нет': False}
 
 
-def google_sheets():
+def google_sheets(spread_sheet_id):
     creds = None
     if os.path.exists('token.pickle'):
         with open('token.pickle', 'rb') as token:
@@ -53,13 +50,13 @@ def google_sheets():
 
     service = build('sheets', 'v4', credentials=creds)
     sheet = service.spreadsheets()
-    result = sheet.values().get(spreadsheetId=SAMPLE_SPREADSHEET_ID,
+    result = sheet.values().get(spreadsheetId=spread_sheet_id,
                                 range=SAMPLE_RANGE_NAME, valueRenderOption='FORMULA').execute()
     values = result.get('values')
     return values
 
 
-def google_sheets_update(sheet_index):
+def google_sheets_update(spread_sheet_id, sheet_index):
     creds = None
     if os.path.exists('token.pickle'):
         with open('token.pickle', 'rb') as token:
@@ -85,7 +82,7 @@ def google_sheets_update(sheet_index):
     }
     service = build('sheets', 'v4', credentials=creds)
     result = service.spreadsheets().values().update(
-        spreadsheetId=SAMPLE_SPREADSHEET_ID, range='H' + str(sheet_index),
+        spreadsheetId=spread_sheet_id, range='H' + str(sheet_index),
         valueInputOption='RAW', body=body).execute()
 
 
@@ -187,7 +184,8 @@ def main():
     facebook_token = os.getenv('FACEBOOK_TOKEN')
     facebook_group_id = os.getenv('FACEBOOK_GROUP_ID')
 
-    google_sheets()
+    spread_sheet_id = os.getenv('SPREAD_SHEET_ID')
+    google_sheets(spread_sheet_id)
     gauth = GoogleAuth()
     drive = GoogleDrive(gauth)
 
@@ -206,11 +204,10 @@ def main():
                                    name_of_file['name_text'])
                 if publish_fb:
                     post_facebook(facebook_token, facebook_group_id, name_of_file['name_image'], name_of_file['name_text'])
-                google_sheets_update(post['sheet_index'])
+                google_sheets_update(spread_sheet_id, post['sheet_index'])
         time.sleep(1800)
 
 
 if __name__ == '__main__':
     main()
-
 
