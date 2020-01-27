@@ -1,7 +1,7 @@
 # SMM Planer
 
-```SMM Planer``` - этот код, поможет организовать и выкладывать посты по дате и времени в таких социальных сетях и мессенджере, как : ```Vkontakte```,```Facebook```,
-```Telegram```. Создайте и заполните  ```Google Sheets```, как в <a href='https://docs.google.com/spreadsheets/d/1uzAoBYWrmxAGAyENIZ7EJ0HwHD_JxtWSELG4ppYVvT0/edit?ts=5e20d988#gid=0'>примере</a> и cэкономте время.
+```SMM Planer``` - этот код, поможет организовать и выкладывать посты по дате и времени в таких социальных сетях и мессенджере, как: ```Vkontakte```, ```Facebook```,
+```Telegram```. Создайте и заполните  ```Google Sheets```, как в <a href='https://docs.google.com/spreadsheets/d/1uzAoBYWrmxAGAyENIZ7EJ0HwHD_JxtWSELG4ppYVvT0/edit?ts=5e20d988#gid=0'>примере</a> и сэкономьте время.
 
 
 ## Как установить 
@@ -28,7 +28,7 @@ Python3 должен быть уже установлен. Затем испол
  <br>
   В социальной сети ```Vk```:
 <br>
-```VK_PHONE```- номер телефона, на который зарегестрирован  ```Vk```;
+```VK_PHONE```- номер телефона, на который зарегистрирован  ```Vk```;
 <br>
 ```VK_PASSWORD ```- пароль от учетной записи;
 <br>
@@ -44,7 +44,7 @@ Python3 должен быть уже установлен. Затем испол
 ```FACEBOOK_GROUP_ID```- ```id``` группы в ```Fb```;
 <br>
 <br>
-В месенджере ```Telegram```:
+В мессенджере ```Telegram```:
 <br>
 ```TELEGRAM_TOKEN```- токен доступа от ```Telegram```;
 <br>
@@ -54,13 +54,13 @@ Python3 должен быть уже установлен. Затем испол
 
 1. Перейдите по <a href='https://developers.google.com/sheets/api/quickstart/python'>ссылке</a>
 2. Нажмите на кнопку ```Enable the Google Sheets API``` для загрузки ключей от вашего аккаунта в ```Google```
-3. Вставте данный файл в папку проекта.
+3. Вставьте данный файл в папку проекта.
 
 ### Как подключить ```Google Sheets ```
 
-1.Откройте свой ```Google Sheets```.
+1. Откройте свой ```Google Sheets```.
 <br>
-2.В адресной строке будет ссылка такого типа : ```https://docs.google.com/spreadsheets/d/1uzAoBYWrmxAGAyENIZ7EJ0HwHD_JxtWSELG4ppYVvT0/edit?ts=5e20d988#gid=0```.<br>
+2. В адресной строке будет ссылка такого типа: ```https://docs.google.com/spreadsheets/d/1uzAoBYWrmxAGAyENIZ7EJ0HwHD_JxtWSELG4ppYVvT0/edit?ts=5e20d988#gid=0```.<br>
 3.```1uzAoBYWrmxAGAyENIZ7EJ0HwHD_JxtWSELG4ppYVvT0``` - это есть ваш ```SPREAD_SHEET_ID```
 
 ## Как запустить код
@@ -75,6 +75,6 @@ Python3 должен быть уже установлен. Затем испол
 <br>
 После прохождения авторизации, закройте окно.
 <br>
-Ваша програма запущенна и работает, поздравляю!
+Ваша программа запущенна и работает, поздравляю!
 
 
