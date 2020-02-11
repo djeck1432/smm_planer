@@ -56,7 +56,11 @@ def google_sheets(spread_sheet_id):
     return values
 
 
+<<<<<<< HEAD
 def update_google_sheets(spread_sheet_id, sheet_index):
+=======
+def google_sheets_update(spread_sheet_id, sheet_index):
+>>>>>>> 8986764d17a020f7820711194ac9c3d93eeb7d0f
     creds = None
     if os.path.exists('token.pickle'):
         with open('token.pickle', 'rb') as token:
@@ -220,11 +224,14 @@ def main():
                                    name_of_file['name_text'])
                 if details_publish['publish_fb']:
                     post_facebook(facebook_token, facebook_group_id, name_of_file['name_image'], name_of_file['name_text'])
+<<<<<<< HEAD
                 update_google_sheets(spread_sheet_id, post['sheet_index'])
+=======
+                google_sheets_update(spread_sheet_id, post['sheet_index'])
+>>>>>>> 8986764d17a020f7820711194ac9c3d93eeb7d0f
         time.sleep(1800)
 
 
 if __name__ == '__main__':
     main()
-
 
