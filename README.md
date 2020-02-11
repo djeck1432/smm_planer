@@ -59,7 +59,7 @@ Python3 должен быть уже установлен. Затем испол
 ### Как подключить ```Google Sheets ```
 
 1. Откройте свой ```Google Sheets```.
-<br>
+
 2. В адресной строке будет ссылка такого типа: ```https://docs.google.com/spreadsheets/d/1uzAoBYWrmxAGAyENIZ7EJ0HwHD_JxtWSELG4ppYVvT0/edit?ts=5e20d988#gid=0```.<br>
 3.```1uzAoBYWrmxAGAyENIZ7EJ0HwHD_JxtWSELG4ppYVvT0``` - это есть ваш ```SPREAD_SHEET_ID```
 
