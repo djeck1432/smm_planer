@@ -56,7 +56,7 @@ def google_sheets(spread_sheet_id):
     return values
 
 
-def google_sheets_update(spread_sheet_id, sheet_index):
+def update_google_sheets(spread_sheet_id, sheet_index):
     creds = None
     if os.path.exists('token.pickle'):
         with open('token.pickle', 'rb') as token:
@@ -98,14 +98,14 @@ def get_link_formatted(link):
     return url_id
 
 
-def get_post_informations():
+def get_informations(spread_sheet_id):
     date = datetime.datetime.now()
     today = date.weekday()
     hours = date.hour
-    values = google_sheets()
+    values = google_sheets(spread_sheet_id)
     post_params = []
     if not values:
-        print('No data found.')
+        raise ValueError
     else:
         for sheet_index, value in enumerate(values[2:]):
             if DAYS_OF_THE_WEEK[value[3]] == today and value[4] == hours:
@@ -123,6 +123,8 @@ def get_post_informations():
     return post_params
 
 
+
+
 def download_google_drive(drive, publish_article, publish_image):
     name_of_file = {}
     if publish_image is not None:
@@ -138,8 +140,8 @@ def download_google_drive(drive, publish_article, publish_image):
 
 
 def post_telegram(bot, telegram_chat_id, image, text):
-    with open(text, 'r') as text:
-        bot.send_message(chat_id=telegram_chat_id, text=text.read())
+    with open(text, 'r') as post_text:
+        bot.send_message(chat_id=telegram_chat_id, text=post_text.read())
     with open(image, 'rb') as photo:
         bot.send_photo(chat_id=telegram_chat_id, photo=photo)
 
@@ -156,15 +158,29 @@ def post_vkontakte(vk_phone, vk_password, vk_owner_id, vk_album_id, image_path, 
         album_id=vk_album_id
     )
     attachment_photo = 'photo{}_{}'.format(photo[0]['owner_id'], photo[0]['id'])
-    with open(text, 'r') as text:
-        return vk.wall.post(owner_id=owner_id, message=text.read(), attachment=attachment_photo)
+    with open(text, 'r') as post_text:
+        return vk.wall.post(owner_id=owner_id, message=post_text.read(), attachment=attachment_photo)
 
 
 def post_facebook(facebook_token, facebook_group_id, image_path, text):
     graph = facebook.GraphAPI(access_token=facebook_token, version='3.1')
     with open(image_path, 'rb') as image:
-        with open(text, 'r') as text:
-            graph.put_photo(image=image, album_path=facebook_group_id + '/photos', message=text.read())
+        with open(text, 'r') as post_text:
+            graph.put_photo(image=image, album_path=facebook_group_id + '/photos', message=post_text.read())
+
+def publish_or_not(post):
+    details_post = {
+        'publish_vk': '',
+        'publish_tg': '',
+        'publish_fb': '',
+    }
+    if post['vk'] is not None:
+        details_post['publish_vk'] = PUBLISH_OR_NOT[post['vk'].lower()]
+    if post['tg'] is not None:
+        details_post['publish_tg'] = PUBLISH_OR_NOT[post['tg'].lower()]
+    if post['fb'] is not None:
+        details_post['publish_fb'] = PUBLISH_OR_NOT[post['fb'].lower()]
+    return details_post
 
 
 def main():
@@ -190,21 +206,21 @@ def main():
     drive = GoogleDrive(gauth)
 
     while True:
-        posts = get_post_informations()
+        posts = get_informations(spread_sheet_id)
         for post in posts:
-            publish_vk = PUBLISH_OR_NOT[post['vk']]
-            publish_tg = PUBLISH_OR_NOT[post['tg']]
-            publish_fb = PUBLISH_OR_NOT[post['fb']]
+            details_publish = publish_or_not(post)
             name_of_file = download_google_drive(drive, post['publish_article'], post['publish_image'])
+            if PUBLISH_OR_NOT[post['is_published']]:
+                continue
             if not PUBLISH_OR_NOT[post['is_published']]:
-                if publish_tg:
+                if details_publish['publish_tg']:
                     post_telegram(bot, telegram_chat_id, name_of_file['name_image'], name_of_file['name_text'])
-                if publish_vk:
+                if details_publish['publish_vk']:
                     post_vkontakte(vk_phone, vk_password, vk_owner_id, vk_album_id, name_of_file['name_image'],
                                    name_of_file['name_text'])
-                if publish_fb:
+                if details_publish['publish_fb']:
                     post_facebook(facebook_token, facebook_group_id, name_of_file['name_image'], name_of_file['name_text'])
-                google_sheets_update(spread_sheet_id, post['sheet_index'])
+                update_google_sheets(spread_sheet_id, post['sheet_index'])
         time.sleep(1800)
 
 
