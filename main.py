@@ -31,8 +31,7 @@ DAYS_OF_THE_WEEK = {
 }
 PUBLISH_OR_NOT = {'да': True, 'нет': False}
 
-
-def google_sheets(spread_sheet_id):
+def get_creds():
     creds = None
     if os.path.exists('token.pickle'):
         with open('token.pickle', 'rb') as token:
@@ -47,7 +46,10 @@ def google_sheets(spread_sheet_id):
         # Save the credentials for the next run
         with open('token.pickle', 'wb') as token:
             pickle.dump(creds, token)
+    return creds
 
+def google_sheets(spread_sheet_id):
+    creds = get_creds()
     service = build('sheets', 'v4', credentials=creds)
     sheet = service.spreadsheets()
     result = sheet.values().get(spreadsheetId=spread_sheet_id,
@@ -56,28 +58,9 @@ def google_sheets(spread_sheet_id):
     return values
 
 
-
 def update_google_sheets(spread_sheet_id, sheet_index):
-    creds = None
-    if os.path.exists('token.pickle'):
-        with open('token.pickle', 'rb') as token:
-            creds = pickle.load(token)
-    if not creds or not creds.valid:
-        if creds and creds.expired and creds.refresh_token:
-            creds.refresh(Request())
-        else:
-            flow = InstalledAppFlow.from_client_secrets_file(
-                'credentials.json', SCOPES)
-            creds = flow.run_local_server(port=0)
-        # Save the credentials for the next run
-        with open('token.pickle', 'wb') as token:
-            pickle.dump(creds, token)
-    values = [
-        [
-            'да'
-        ],
-
-    ]
+    creds = get_creds()
+    values = [['да'], ]
     body = {
         'values': values
     }
@@ -99,7 +82,7 @@ def get_link_formatted(link):
     return url_id
 
 
-def get_informations(spread_sheet_id):
+def read_post_settings(spread_sheet_id):
     date = datetime.datetime.now()
     today = date.weekday()
     hours = date.hour
@@ -122,8 +105,6 @@ def get_informations(spread_sheet_id):
                     'sheet_index': sheet_index + 2,
                 })
     return post_params
-
-
 
 
 def download_google_drive(drive, publish_article, publish_image):
@@ -169,18 +150,28 @@ def post_facebook(facebook_token, facebook_group_id, image_path, text):
         with open(text, 'r') as post_text:
             graph.put_photo(image=image, album_path=facebook_group_id + '/photos', message=post_text.read())
 
-def publish_or_not(post):
+
+def post_publish_or_not(post):
     details_post = {
         'publish_vk': '',
         'publish_tg': '',
         'publish_fb': '',
     }
-    if post['vk'] is not None:
-        details_post['publish_vk'] = PUBLISH_OR_NOT[post['vk'].lower()]
-    if post['tg'] is not None:
-        details_post['publish_tg'] = PUBLISH_OR_NOT[post['tg'].lower()]
-    if post['fb'] is not None:
-        details_post['publish_fb'] = PUBLISH_OR_NOT[post['fb'].lower()]
+    try:
+        if post['vk'] is not None:
+            details_post['publish_vk'] = PUBLISH_OR_NOT[post['vk'].lower()]
+    except KeyError:
+        raise
+    try:
+        if post['tg'] is not None:
+            details_post['publish_tg'] = PUBLISH_OR_NOT[post['tg'].lower()]
+    except KeyError:
+        raise
+    try:
+        if post['fb'] is not None:
+            details_post['publish_fb'] = PUBLISH_OR_NOT[post['fb'].lower()]
+    except KeyError:
+        raise
     return details_post
 
 
@@ -207,9 +198,9 @@ def main():
     drive = GoogleDrive(gauth)
 
     while True:
-        posts = get_informations(spread_sheet_id)
+        posts = read_post_settings(spread_sheet_id)
         for post in posts:
-            details_publish = publish_or_not(post)
+            details_publish = post_publish_or_not(post)
             name_of_file = download_google_drive(drive, post['publish_article'], post['publish_image'])
             if PUBLISH_OR_NOT[post['is_published']]:
                 continue
@@ -220,7 +211,8 @@ def main():
                     post_vkontakte(vk_phone, vk_password, vk_owner_id, vk_album_id, name_of_file['name_image'],
                                    name_of_file['name_text'])
                 if details_publish['publish_fb']:
-                    post_facebook(facebook_token, facebook_group_id, name_of_file['name_image'], name_of_file['name_text'])
+                    post_facebook(facebook_token, facebook_group_id, name_of_file['name_image'],
+                                  name_of_file['name_text'])
 
                 update_google_sheets(spread_sheet_id, post['sheet_index'])
         time.sleep(1800)
@@ -228,4 +220,3 @@ def main():
 
 if __name__ == '__main__':
     main()
-
