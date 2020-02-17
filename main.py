@@ -31,6 +31,7 @@ DAYS_OF_THE_WEEK = {
 }
 PUBLISH_OR_NOT = {'да': True, 'нет': False}
 
+
 def get_creds():
     creds = None
     if os.path.exists('token.pickle'):
@@ -48,8 +49,8 @@ def get_creds():
             pickle.dump(creds, token)
     return creds
 
-def google_sheets(spread_sheet_id):
-    creds = get_creds()
+
+def get_google_sheets(creds, spread_sheet_id, ):
     service = build('sheets', 'v4', credentials=creds)
     sheet = service.spreadsheets()
     result = sheet.values().get(spreadsheetId=spread_sheet_id,
@@ -58,8 +59,7 @@ def google_sheets(spread_sheet_id):
     return values
 
 
-def update_google_sheets(spread_sheet_id, sheet_index):
-    creds = get_creds()
+def update_google_sheets(creds, spread_sheet_id, sheet_index):
     values = [['да'], ]
     body = {
         'values': values
@@ -82,11 +82,11 @@ def get_link_formatted(link):
     return url_id
 
 
-def read_post_settings(spread_sheet_id):
+def read_post_settings(creds, spread_sheet_id):
     date = datetime.datetime.now()
     today = date.weekday()
     hours = date.hour
-    values = google_sheets(spread_sheet_id)
+    values = get_google_sheets(creds, spread_sheet_id)
     post_params = []
     if not values:
         raise ValueError
@@ -151,27 +151,26 @@ def post_facebook(facebook_token, facebook_group_id, image_path, text):
             graph.put_photo(image=image, album_path=facebook_group_id + '/photos', message=post_text.read())
 
 
-def post_publish_or_not(post):
+def get_publish_or_not(post):
     details_post = {
         'publish_vk': '',
         'publish_tg': '',
         'publish_fb': '',
     }
-    try:
-        if post['vk'] is not None:
-            details_post['publish_vk'] = PUBLISH_OR_NOT[post['vk'].lower()]
-    except KeyError:
-        raise
-    try:
-        if post['tg'] is not None:
-            details_post['publish_tg'] = PUBLISH_OR_NOT[post['tg'].lower()]
-    except KeyError:
-        raise
-    try:
-        if post['fb'] is not None:
+    if PUBLISH_OR_NOT.get(post['vk'].lower()) is not None:
+        details_post['publish_vk'] = PUBLISH_OR_NOT[post['vk'].lower()]
+    else:
+        details_post['publish_vk'] = None
+
+    if PUBLISH_OR_NOT.get(post['tg'].lower) is not None:
+        details_post['publish_tg'] = PUBLISH_OR_NOT[post['tg'].lower()]
+    else:
+        details_post['publish_tg'] = None
+
+    if PUBLISH_OR_NOT.get(post['fb'].lower) is not None:
             details_post['publish_fb'] = PUBLISH_OR_NOT[post['fb'].lower()]
-    except KeyError:
-        raise
+    else:
+        details_post['publish_fb'] = None
     return details_post
 
 
@@ -193,17 +192,17 @@ def main():
     facebook_group_id = os.getenv('FACEBOOK_GROUP_ID')
 
     spread_sheet_id = os.getenv('SPREAD_SHEET_ID')
-    google_sheets(spread_sheet_id)
+    creds = get_creds()
+    get_google_sheets(creds, spread_sheet_id)
     gauth = GoogleAuth()
     drive = GoogleDrive(gauth)
-
     while True:
-        posts = read_post_settings(spread_sheet_id)
+        posts = read_post_settings(creds, spread_sheet_id)
         for post in posts:
-            details_publish = post_publish_or_not(post)
+            details_publish = get_publish_or_not(post)
             name_of_file = download_google_drive(drive, post['publish_article'], post['publish_image'])
             if PUBLISH_OR_NOT[post['is_published']]:
-                continue
+                 continue
             if not PUBLISH_OR_NOT[post['is_published']]:
                 if details_publish['publish_tg']:
                     post_telegram(bot, telegram_chat_id, name_of_file['name_image'], name_of_file['name_text'])
@@ -214,8 +213,8 @@ def main():
                     post_facebook(facebook_token, facebook_group_id, name_of_file['name_image'],
                                   name_of_file['name_text'])
 
-                update_google_sheets(spread_sheet_id, post['sheet_index'])
-        time.sleep(1800)
+                update_google_sheets(creds, spread_sheet_id, post['sheet_index'])
+        time.sleep(0)
 
 
 if __name__ == '__main__':
