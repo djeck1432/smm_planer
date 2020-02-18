@@ -160,9 +160,9 @@ def get_publish_or_not(post):
     vk_label = post['vk'].lower
     tg_label = post['tg'].lower
     fb_label = post['fb'].lower
-    post_details['bool_vk'] = PUBLISH_OR_NOT[vk_label] if PUBLISH_OR_NOT.get(vk_label) is not None else None
-    post_details['bool_tg'] = PUBLISH_OR_NOT[tg_label] if PUBLISH_OR_NOT.get(tg_label) is not None else None
-    post_details['bool_fb'] = PUBLISH_OR_NOT[fb_label ] if PUBLISH_OR_NOT.get(fb_label) is not None else None
+    post_details['bool_vk'] = PUBLISH_OR_NOT.get(vk_label)
+    post_details['bool_tg'] = PUBLISH_OR_NOT.get(tg_label)
+    post_details['bool_fb'] = PUBLISH_OR_NOT.get(fb_label)
     return post_details
 
 
@@ -188,9 +188,11 @@ def main():
     get_google_sheets(creds, spread_sheet_id)
     gauth = GoogleAuth()
     drive = GoogleDrive(gauth)
+
     while True:
         posts = read_post_settings(creds, spread_sheet_id)
         for post in posts:
+            print(post)
             details_publish = get_publish_or_not(post)
             name_of_file = download_google_drive(drive, post['publish_article'], post['publish_image'])
             if not PUBLISH_OR_NOT[post['is_published']]:
