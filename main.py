@@ -152,26 +152,18 @@ def post_facebook(facebook_token, facebook_group_id, image_path, text):
 
 
 def get_publish_or_not(post):
-    details_post = {
-        'publish_vk': '',
-        'publish_tg': '',
-        'publish_fb': '',
+    post_details = {
+        'bool_vk': '',
+        'bool_tg': '',
+        'bool_fb': '',
     }
-    if PUBLISH_OR_NOT.get(post['vk'].lower()) is not None:
-        details_post['publish_vk'] = PUBLISH_OR_NOT[post['vk'].lower()]
-    else:
-        details_post['publish_vk'] = None
-
-    if PUBLISH_OR_NOT.get(post['tg'].lower) is not None:
-        details_post['publish_tg'] = PUBLISH_OR_NOT[post['tg'].lower()]
-    else:
-        details_post['publish_tg'] = None
-
-    if PUBLISH_OR_NOT.get(post['fb'].lower) is not None:
-            details_post['publish_fb'] = PUBLISH_OR_NOT[post['fb'].lower()]
-    else:
-        details_post['publish_fb'] = None
-    return details_post
+    vk_label = post['vk'].lower
+    tg_label = post['tg'].lower
+    fb_label = post['fb'].lower
+    post_details['bool_vk'] = PUBLISH_OR_NOT[vk_label] if PUBLISH_OR_NOT.get(vk_label) is not None else None
+    post_details['bool_tg'] = PUBLISH_OR_NOT[tg_label] if PUBLISH_OR_NOT.get(tg_label) is not None else None
+    post_details['bool_fb'] = PUBLISH_OR_NOT[fb_label ] if PUBLISH_OR_NOT.get(fb_label) is not None else None
+    return post_details
 
 
 def main():
@@ -201,8 +193,6 @@ def main():
         for post in posts:
             details_publish = get_publish_or_not(post)
             name_of_file = download_google_drive(drive, post['publish_article'], post['publish_image'])
-            if PUBLISH_OR_NOT[post['is_published']]:
-                 continue
             if not PUBLISH_OR_NOT[post['is_published']]:
                 if details_publish['publish_tg']:
                     post_telegram(bot, telegram_chat_id, name_of_file['name_image'], name_of_file['name_text'])
