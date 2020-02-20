@@ -157,9 +157,9 @@ def get_publish_or_not(post):
         'bool_tg': '',
         'bool_fb': '',
     }
-    vk_label = post['vk'].lower
-    tg_label = post['tg'].lower
-    fb_label = post['fb'].lower
+    vk_label = post['vk'].lower()
+    tg_label = post['tg'].lower()
+    fb_label = post['fb'].lower()
     post_details['bool_vk'] = PUBLISH_OR_NOT.get(vk_label)
     post_details['bool_tg'] = PUBLISH_OR_NOT.get(tg_label)
     post_details['bool_fb'] = PUBLISH_OR_NOT.get(fb_label)
@@ -188,20 +188,18 @@ def main():
     get_google_sheets(creds, spread_sheet_id)
     gauth = GoogleAuth()
     drive = GoogleDrive(gauth)
-
     while True:
         posts = read_post_settings(creds, spread_sheet_id)
         for post in posts:
-            print(post)
             details_publish = get_publish_or_not(post)
             name_of_file = download_google_drive(drive, post['publish_article'], post['publish_image'])
             if not PUBLISH_OR_NOT[post['is_published']]:
-                if details_publish['publish_tg']:
+                if details_publish['bool_tg']:
                     post_telegram(bot, telegram_chat_id, name_of_file['name_image'], name_of_file['name_text'])
-                if details_publish['publish_vk']:
+                if details_publish['bool_vk']:
                     post_vkontakte(vk_phone, vk_password, vk_owner_id, vk_album_id, name_of_file['name_image'],
                                    name_of_file['name_text'])
-                if details_publish['publish_fb']:
+                if details_publish['bool_fb']:
                     post_facebook(facebook_token, facebook_group_id, name_of_file['name_image'],
                                   name_of_file['name_text'])
 
