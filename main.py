@@ -66,7 +66,7 @@ def update_google_sheets(creds, spread_sheet_id, sheet_index):
     }
     service = build('sheets', 'v4', credentials=creds)
     result = service.spreadsheets().values().update(
-        spreadsheetId=spread_sheet_id, range='H' + str(sheet_index),
+        spreadsheetId=spread_sheet_id, range='H' + str(sheet_index+1),
         valueInputOption='RAW', body=body).execute()
 
 
@@ -202,9 +202,8 @@ def main():
                 if details_publish['bool_fb']:
                     post_facebook(facebook_token, facebook_group_id, name_of_file['name_image'],
                                   name_of_file['name_text'])
-
                 update_google_sheets(creds, spread_sheet_id, post['sheet_index'])
-        time.sleep(0)
+        time.sleep(1800)
 
 
 if __name__ == '__main__':
