@@ -152,18 +152,15 @@ def post_facebook(facebook_token, facebook_group_id, image_path, text):
 
 
 def get_publish_or_not(post):
-    post_details = {
-        'bool_vk': '',
-        'bool_tg': '',
-        'bool_fb': '',
-    }
     vk_label = post['vk'].lower()
     tg_label = post['tg'].lower()
     fb_label = post['fb'].lower()
-    post_details['bool_vk'] = PUBLISH_OR_NOT.get(vk_label)
-    post_details['bool_tg'] = PUBLISH_OR_NOT.get(tg_label)
-    post_details['bool_fb'] = PUBLISH_OR_NOT.get(fb_label)
-    return post_details
+    return {
+        'bool_vk': PUBLISH_OR_NOT.get(vk_label),
+        'bool_tg': PUBLISH_OR_NOT.get(tg_label),
+        'bool_fb': PUBLISH_OR_NOT.get(fb_label)
+    }
+
 
 
 def main():
