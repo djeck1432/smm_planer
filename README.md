@@ -9,16 +9,15 @@ Create and fill in Google Sheets as in an  <a href='https://docs.google.com/spre
 Python3 have to be already installed. Then use pip (or pip3, there is a contravention with Python2) to install dependencies:<br>
 ``` https://github.com/djeck1432/smm_planer.git ```
 
-После того, как скачали репозиторий, откройте в терминале(MacOs) или в консоли(Linux) папку ```smm_planer``` следующей командой:<br>
+After you downloaded the repository open a folder ```post_in_socialnetworks``` using next command: <br>
 
 ```cd smm_planer```
 
-Для того, что бы запустить код, нужно установить необходимые библиотеки:<br>
+Now all of the required libraries and modules have to be installed:<br>
 
 ```pip install -r requirements.txt ```<br>
 
-Готово, мы установили проект и все необходимые библиотеки у нас на компьютере.
-
+Now we are ready for the script .
 
 ## Что нужно знать: 
   ### Переменные окружения: 
