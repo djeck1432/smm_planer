@@ -1,13 +1,12 @@
 # SMM Planer
 
-```SMM Planer``` - этот код, поможет организовать и выкладывать посты по дате и времени в таких социальных сетях и мессенджере, как: ```Vkontakte```, ```Facebook```,
-```Telegram```. Создайте и заполните  ```Google Sheets```, как в <a href='https://docs.google.com/spreadsheets/d/1uzAoBYWrmxAGAyENIZ7EJ0HwHD_JxtWSELG4ppYVvT0/edit?ts=5e20d988#gid=0'>примере</a> и сэкономьте время.
+```SMM planer``` – this code will help you to organize and make post by the date and time in such social networks and messengers as: ```Vkontakte```, ```Facebook```, ```Telegram```. 
+Create and fill in Google Sheets as in an  <a href='https://docs.google.com/spreadsheets/d/1uzAoBYWrmxAGAyENIZ7EJ0HwHD_JxtWSELG4ppYVvT0/edit?ts=5e20d988#gid=0'>example</a> and save your time.
 
 
-## Как установить 
+## How to install
 
-Python3 должен быть уже установлен. Затем используйте pip (или pip3, есть конфликт с Python2) для установки зависимостей:<br>
-
+Python3 have to be already installed. Then use pip (or pip3, there is a contravention with Python2) to install dependencies:<br>
 ``` https://github.com/djeck1432/smm_planer.git ```
 
 После того, как скачали репозиторий, откройте в терминале(MacOs) или в консоли(Linux) папку ```smm_planer``` следующей командой:<br>
