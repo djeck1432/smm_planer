@@ -20,7 +20,7 @@ Now all of the required libraries and modules have to be installed:<br>
 Now we are ready for the script .
 
 ## What you need to know: 
-  ### Enviroment variabels: 
+  ### Environment variables: 
 ```SPREAD_SHEET_ID``` - ```id``` your table;
  <br>
  <br>
@@ -42,13 +42,13 @@ In social network ```Fb```:
 ```FACEBOOK_GROUP_ID```- group ```id``` in ```Fb```;
 <br>
 <br>
-In messanger ```Telegram```:
+In messenger ```Telegram```:
 <br>
 ```TELEGRAM_TOKEN```- token ```Telegram```;
 <br>
 ```TELEGRAM_CHAT_ID```- username of account ```Telegram```;
 <br> 
-### Receiving keys from ```Google Sheets Api```
+### Receiving keys from ```Google Sheets API```
 
 1. Follow this <a href='https://developers.google.com/sheets/api/quickstart/python'>link</a>
 2. Push the button ```Enable the Google Sheets API``` to download the keys to your account in ```Google```
@@ -56,9 +56,9 @@ In messanger ```Telegram```:
 
 ### How to connect ```Google Sheets ```
 
-1. Open the web-site ```Google Sheets```.
+1. Open the website, ```Google Sheets```.
 
-2. In the address bar there will be a link of this type: ```https://docs.google.com/spreadsheets/d/1uzAoBYWrmxAGAyENIZ7EJ0HwHD_JxtWSELG4ppYVvT0/edit?ts=5e20d988#gid=0```.<br>
+2. In the address bar, there will be a link of this type: ```https://docs.google.com/spreadsheets/d/1uzAoBYWrmxAGAyENIZ7EJ0HwHD_JxtWSELG4ppYVvT0/edit?ts=5e20d988#gid=0```.<br>
 3.```1uzAoBYWrmxAGAyENIZ7EJ0HwHD_JxtWSELG4ppYVvT0``` - this is your ```SPREAD_SHEET_ID```
 
 ## How to run the code
