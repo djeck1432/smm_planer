@@ -19,60 +19,60 @@ Now all of the required libraries and modules have to be installed:<br>
 
 Now we are ready for the script .
 
-## Что нужно знать: 
-  ### Переменные окружения: 
-```SPREAD_SHEET_ID``` - ```id``` вашей таблицы
+## What you need to know: 
+  ### Enviroment variabels: 
+```SPREAD_SHEET_ID``` - ```id``` your table;
  <br>
  <br>
-  В социальной сети ```Vk```:
+  In social network ```Vk```:
 <br>
-```VK_PHONE```- номер телефона, на который зарегистрирован  ```Vk```;
+```VK_PHONE```- registered phone number  ```Vk```;
 <br>
-```VK_PASSWORD ```- пароль от учетной записи;
+```VK_PASSWORD ```-  password;
 <br>
-```VK_ALBUM_ID```- ```id``` альбома в вашей группе;
+```VK_ALBUM_ID```- ```id``` album in your group ;
 <br>
-```VK_OWNER_ID```- ```id``` вашей страницы;
-<br>
-<br>
-В социальной сети ```Fb```:
-<br>
-```FACEBOOK_TOKEN```-  токен доступа от ```Fb```;
-<br>
-```FACEBOOK_GROUP_ID```- ```id``` группы в ```Fb```;
+```VK_OWNER_ID```- ```id``` your page;
 <br>
 <br>
-В мессенджере ```Telegram```:
+In social network ```Fb```:
 <br>
-```TELEGRAM_TOKEN```- токен доступа от ```Telegram```;
+```FACEBOOK_TOKEN```-  token from ```Fb```;
 <br>
-```TELEGRAM_CHAT_ID```- имя вашего чата/канала в ```Telegram```;
+```FACEBOOK_GROUP_ID```- group ```id``` in ```Fb```;
+<br>
+<br>
+In messanger ```Telegram```:
+<br>
+```TELEGRAM_TOKEN```- token ```Telegram```;
+<br>
+```TELEGRAM_CHAT_ID```- username of account ```Telegram```;
 <br> 
-### Получения ключей от ```Google Sheets Api```
+### Receiving keys from ```Google Sheets Api```
 
-1. Перейдите по <a href='https://developers.google.com/sheets/api/quickstart/python'>ссылке</a>
-2. Нажмите на кнопку ```Enable the Google Sheets API``` для загрузки ключей от вашего аккаунта в ```Google```
-3. Вставьте данный файл в папку проекта.
+1. Follow this <a href='https://developers.google.com/sheets/api/quickstart/python'>link</a>
+2. Push the button ```Enable the Google Sheets API``` to download the keys to your account in ```Google```
+3. Put in data in the folder of the project.
 
-### Как подключить ```Google Sheets ```
+### How to connect ```Google Sheets ```
 
-1. Откройте свой ```Google Sheets```.
+1. Open the web-site ```Google Sheets```.
 
-2. В адресной строке будет ссылка такого типа: ```https://docs.google.com/spreadsheets/d/1uzAoBYWrmxAGAyENIZ7EJ0HwHD_JxtWSELG4ppYVvT0/edit?ts=5e20d988#gid=0```.<br>
-3.```1uzAoBYWrmxAGAyENIZ7EJ0HwHD_JxtWSELG4ppYVvT0``` - это есть ваш ```SPREAD_SHEET_ID```
+2. In the address bar there will be a link of this type: ```https://docs.google.com/spreadsheets/d/1uzAoBYWrmxAGAyENIZ7EJ0HwHD_JxtWSELG4ppYVvT0/edit?ts=5e20d988#gid=0```.<br>
+3.```1uzAoBYWrmxAGAyENIZ7EJ0HwHD_JxtWSELG4ppYVvT0``` - this is your ```SPREAD_SHEET_ID```
 
-## Как запустить код
+## How to run the code
 
-В ```bash``` выполните следующую команду: 
+In ```bash``` run the following command: 
 <br>
 <br>
 ```python3 main.py```
 <br>
 <br>
-После запуска кода, у вас откроется в браузере окно для авторизации к вашему ```Google Drive```.
+After running the code, a window will open in your browser for authorization to your ```Google Drive```.
 <br>
-После прохождения авторизации, закройте окно.
+After authorization, close the window.
 <br>
-Ваша программа запущенна и работает, поздравляю!
+Your program is up and running, congratulations!
 
 
