@@ -52,18 +52,17 @@ In messenger `Telegram`:
 <br> 
 ### Receiving keys from `Google Sheets API`
 <ol>
-  <li>Follow this <a href='https://developers.google.com/sheets/api/quickstart/python'>link</a></li>
-  <li>Push the button `Enable the Google Sheets API` to download the keys to your account in `Google`</li>
+  <li>Follow this <a href='https://developers.google.com/sheets/api/quickstart/python'>link</a>.</li>
+  <li>Push the button `Enable the Google Sheets API` to download the keys to your account in `Google`.</li>
   <li>Put in data in the folder of the project.</li> 
 </ol>
 
 ### How to connect `Google Sheets `
-
-1. Open the website, `Google Sheets`.
-
-2. In the address bar, there will be a link of this type: `https://docs.google.com/spreadsheets/d/1uzAoBYWrmxAGAyENIZ7EJ0HwHD_JxtWSELG4ppYVvT0/edit?ts=5e20d988#gid=0`.<br>
-3.```1uzAoBYWrmxAGAyENIZ7EJ0HwHD_JxtWSELG4ppYVvT0``` - this is your `SPREAD_SHEET_ID`
-
+<ol>
+  <li>Open the website, `Google Sheets`.</li>
+  <li>In the address bar, there will be a link of this type: `https://docs.google.com/spreadsheets/d/1uzAoBYWrmxAGAyENIZ7EJ0HwHD_JxtWSELG4ppYVvT0/edit?ts=5e20d988#gid=0`.</li>
+  <li>`1uzAoBYWrmxAGAyENIZ7EJ0HwHD_JxtWSELG4ppYVvT0` - this is your `SPREAD_SHEET_ID`</li>
+</ol>
 ## How to run the code
 
 In `bash` run the following command: 
